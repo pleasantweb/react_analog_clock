@@ -25,8 +25,8 @@ const App = () => {
     }
   },[]
   )
-  const minute_clock_angle =useCallback((minute)=>{
-    
+  
+  const minute_clock_angle =useCallback((minute)=>{ 
     let minute_angle =(360/60) *  minute
     minute_clock.current.style.transform = `translate(-50%,50%) rotate(${minute_angle}deg)`
   },[])
@@ -36,24 +36,25 @@ const App = () => {
     second_clock.current.style.transform =`translate(-50%,50%) rotate(${second_angle}deg)`
     // return second_angle
   },[])
-
  
-  
 
-useEffect(()=>{
-
- const timeInterval= setInterval(()=>{
-    const time = new Date()
-    const hour = time.getHours()
-    const minute = time.getMinutes()
-    const seconds = time.getSeconds()
-    second_clock_angle(seconds)
-    minute_clock_angle(minute)
-    hour_clock_angle(hour,minute)
+  useEffect(()=>{
+   const timeInterval= setInterval(()=>{
+      const time = new Date()
+      const hour = time.getHours()
+      const minute = time.getMinutes()
+      const seconds = time.getSeconds()
+      second_clock_angle(seconds)
+      minute_clock_angle(minute)
+      hour_clock_angle(hour,minute)
+    },1000)
+   
+   return ()=> clearInterval(timeInterval)
+    
+  },[second_clock_angle,minute_clock_angle,hour_clock_angle])
   
-  },1000)
- return ()=> clearInterval(timeInterval)
-},[second_clock_angle,minute_clock_angle,hour_clock_angle])
+  
+  
   return (
     <section>
       <GiHummingbird className='bird1' />
